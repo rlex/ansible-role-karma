@@ -1,0 +1,64 @@
+- name: create karma system group
+  group:
+    name: "{{ karma_system_group }}"
+    system: true
+    state: present
+
+- name: create karma system user
+  user:
+    name: "{{ karma_system_user }}"
+    system: true
+    shell: "/usr/sbin/nologin"
+    group: "{{ karma_system_group }}"
+    createhome: false
+
+- name: "Download karma files"
+  become: false
+  get_url:
+    url: "https://github.com/prymitive/karma/releases/download/v{{ karma_version }}/karma-linux-amd64.tar.gz"
+    dest: "/tmp/karma-{{ karma_version }}-linux-amd64.tar.gz"
+  delegate_to: localhost
+
+- name: "Create temporary directory"
+  become: false
+  file:
+    path: /tmp/karma_{{karma_version}}_linux_amd64
+    state: directory
+  delegate_to: localhost
+
+- name: "Unarchive karma files"
+  become: false
+  unarchive:
+    src: "/tmp/karma-{{ karma_version }}-linux-amd64.tar.gz"
+    remote_src: yes
+    dest: "/tmp/karma_{{karma_version}}_linux_amd64/"
+    creates: "/tmp/karma_{{karma_version}}_linux_amd64/karma-linux-amd64"
+  delegate_to: localhost
+  check_mode: false
+
+- name: propagate karma binary
+  copy:
+    src: "/tmp/karma_{{karma_version}}_linux_amd64/karma-linux-amd64"
+    dest: "/usr/local/bin/karma"
+    mode: 0755
+    owner: "{{ karma_system_user }}"
+    group: "{{ karma_system_group }}"
+  notify:
+    - restart karma
+
+- name: create systemd service unit
+  template:
+    src: karma.service.j2
+    dest: /etc/systemd/system/karma.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart karma
+
+- name: Generate karma config file
+  template:
+      dest: /etc/karma.yml
+      src: karma.yml.j2
+  notify:
+    - restart karma

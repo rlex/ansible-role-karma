@@ -1,0 +1,51 @@
+alertmanager:
+  servers:
+  {{ karma_alertmanager_servers | to_nice_yaml(indent=2) | indent(2, False) }}
+annotations:
+  default:
+    hidden: false
+  hidden:
+    - help
+  visible: []
+#custom:
+#  css: /custom.css
+#  js: /custom.js
+debug: false
+filters:
+  default:
+    - "@receiver=by-cluster-service"
+karma:
+  name: karma-prod
+labels:
+  color:
+    static:
+      - job
+    unique:
+      - cluster
+      - instance
+      - "@receiver"
+  keep: []
+  strip: []
+listen:
+  address: "{{ karma_listen_address }}"
+  port: {{ karma_listen_port }}
+  prefix: {{ karma_listen_prefix }}
+log:
+  config: false
+  level: info
+silences:
+  comments:
+    linkDetect:
+      rules:
+      {{ karma_silences_comments_linkdetect_rules | to_nice_yaml(indent=2) | indent(6, False) }}
+receivers:
+  keep: []
+  strip: []
+#sentry:
+#  private: secret
+#  public: 123456789
+silenceForm:
+  strip:
+    labels: {{ karma_silenceform_strip_labels }}
+ui:
+

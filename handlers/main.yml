@@ -1,0 +1,5 @@
+- name: restart karma
+  systemd:
+    daemon_reload: true
+    name: karma
+    state: restarted

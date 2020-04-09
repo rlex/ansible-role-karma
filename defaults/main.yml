@@ -1,0 +1,28 @@
+karma_version: "0.60"
+karma_listen_address: 0.0.0.0
+karma_listen_port: 8512
+karma_listen_prefix: /
+karma_system_user: karma
+karma_system_group: karma
+karma_karma_name: karma-prod
+karma_alertmanager_interval: 60s
+karma_alertmanager_servers:
+  - name: local
+    uri: http://localhost:9093
+    timeout: 10s
+    proxy: true
+    readonly: false
+karma_ui:
+  refresh: 30s
+  hideFiltersWhenIdle: true
+  colorTitlebar: false
+  minimalGroupWidth: 420
+  alertsPerGroup: 5
+  collapseGroups: collapsedOnMobile
+karma_silences_comments_linkdetect_rules:
+  - regex: "(DEVOPS-[0-9]+)"
+    uriTemplate: https://jira.example.com/browse/$1
+karma_receivers_keep: []
+karma_receivers_strip: []
+karma_silenceform_strip_labels:
+  - job
