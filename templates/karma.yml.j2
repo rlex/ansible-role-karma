@@ -11,21 +11,41 @@ annotations:
 #  css: /custom.css
 #  js: /custom.js
 debug: false
+{% if karma_filters_default is defined and karma_filters_default is iterable %}
 filters:
   default:
-    - "@receiver=by-cluster-service"
+{% for filter in karma_filters_default %}
+    - "{{ filter }}"
+{% endfor %}
+{% endif %}
 karma:
-  name: karma-prod
+  name: {{ karma_karma_name }}
 labels:
   color:
+{% if karma_labels_color_static is defined and karma_labels_color_static is iterable %}
     static:
-      - job
+{% for label in karma_labels_color_static %}
+    - "{{ label }}"
+{% endfor %}
+{% endif %}
+{% if karma_labels_color_unique is defined and karma_labels_color_unique is iterable %}
     unique:
-      - cluster
-      - instance
-      - "@receiver"
-  keep: []
-  strip: []
+{% for label in karma_labels_color_unique %}
+    - "{{ label }}"
+{% endfor %}
+{% endif %}
+{% if karma_labels_keep is defined and karma_labels_keep is iterable %}
+  keep:
+{% for label in karma_labels_keep %}
+  - "{{ label }}"
+{% endfor %}
+{% endif %}
+{% if karma_labels_strip is defined and karma_labels_strip is iterable %}
+  strip:
+{% for label in karma_labels_strip %}
+  - "{{ label }}"
+{% endfor %}
+{% endif %}
 listen:
   address: "{{ karma_listen_address }}"
   port: {{ karma_listen_port }}
@@ -44,8 +64,16 @@ receivers:
 #sentry:
 #  private: secret
 #  public: 123456789
+{% if karma_silenceform_strip_labels is defined and karma_silenceform_strip_labels is iterable %}
 silenceForm:
   strip:
-    labels: {{ karma_silenceform_strip_labels }}
+    labels:
+{% for label in karma_silenceform_strip_labels %}
+    - {{ label }}
+{% endfor %}
+{% endif %}
+grid:
+  sorting:
+    {{ karma_grid_sorting | to_nice_yaml(indent=2) | indent(2, False) }}
 ui:
-
+  {{ karma_ui | to_nice_yaml(indent=2) | indent(2, False) }}

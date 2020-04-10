@@ -26,3 +26,24 @@ karma_receivers_keep: []
 karma_receivers_strip: []
 karma_silenceform_strip_labels:
   - job
+karma_name: karma-prod
+karma_grid_sorting:
+  order: label
+  reverse: false
+  label: severity
+  customValues:
+    labels:
+      severity:
+        critical: 1
+        warning: 2
+        info: 3
+karma_filters_default:
+ - "@state=active"
+karma_labels_color_static:
+  - job
+karma_labels_color_unique:
+  - cluster
+  - instance
+  - "@receiver"
+karma_labels_keep: []
+karma_labels_strip: []
