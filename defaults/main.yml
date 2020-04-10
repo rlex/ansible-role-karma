@@ -47,3 +47,8 @@ karma_labels_color_unique:
   - "@receiver"
 karma_labels_keep: []
 karma_labels_strip: []
+karma_annotations_default_hidden: false
+karma_annotations_hidden: []
+karma_annotations_visible: []
+karma_annotations_keep: []
+karma_annotations_strip: []

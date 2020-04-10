@@ -3,13 +3,31 @@ alertmanager:
   {{ karma_alertmanager_servers | to_nice_yaml(indent=2) | indent(2, False) }}
 annotations:
   default:
-    hidden: false
+    hidden: {{ karma_annotations_default_hidden | bool }}
+{% if karma_annotations_hidden is defined and karma_annotations_hidden is iterable %}
   hidden:
-    - help
-  visible: []
-#custom:
-#  css: /custom.css
-#  js: /custom.js
+{% for annotation in karma_annotations_hidden %}
+  - {{ annotation }}
+{% endfor %}
+{% endif %}
+{% if karma_annotations_visible is defined and karma_annotations_visible is iterable %}
+  visible:
+{% for annotation in karma_annotations_visible %}
+  - {{ annotation }}
+{% endfor %}
+{% endif %}
+{% if karma_annotations_keep is defined and karma_annotations_keep is iterable %}
+  keep:
+{% for annotation in karma_annotations_keep %}
+  - {{ annotation }}
+{% endfor %}
+{% endif %}
+{% if karma_annotations_strip is defined and karma_annotations_strip is iterable %}
+  strip:
+{% for annotation in karma_annotations_strip %}
+  - {{ annotation }}
+{% endfor %}
+{% endif %}
 debug: false
 {% if karma_filters_default is defined and karma_filters_default is iterable %}
 filters:
@@ -59,11 +77,18 @@ silences:
       rules:
       {{ karma_silences_comments_linkdetect_rules | to_nice_yaml(indent=2) | indent(6, False) }}
 receivers:
-  keep: []
-  strip: []
-#sentry:
-#  private: secret
-#  public: 123456789
+{% if karma_receivers_keep is defined and karma_annotations_keep is iterable %}
+  keep:
+{% for receiver in karma_receivers_keep %}
+  - {{ receiver }}
+{% endfor %}
+{% endif %}
+{% if karma_receivers_strip is defined and karma_annotations_strip is iterable %}
+  strip:
+{% for receiver in karma_receivers_strip %}
+  - {{ receiver }}
+{% endfor %}
+{% endif %}
 {% if karma_silenceform_strip_labels is defined and karma_silenceform_strip_labels is iterable %}
 silenceForm:
   strip:
