@@ -1,6 +1,6 @@
 
 
-TeamCity
+Karma
 =========
 
 Ansible role for [karma](https://github.com/prymitive/karma) prometheus alertmanager dashboard.
