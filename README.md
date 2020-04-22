@@ -90,4 +90,4 @@ karma_grid_sorting:
         warning: 2
         info: 3
 ```
-But depending in your environment and preferences you might need to adjust it for your liking.
+But depending on your environment and preferences you might need to adjust it for your liking.
