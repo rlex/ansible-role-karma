@@ -40,9 +40,9 @@ This role is compatible with any modern systemd-based distro.
 | karma_annotations_strip                  | `[]`                 | Array of annotations to strip              |
 
 ## karma_alertmanager_servers
-karma_alertmanager_servers should be written in YAML format as described in [official docs of karma](https://github.com/prymitive/karma/blob/master/docs/CONFIGURATION.md#alertmanagers)
+karma_alertmanager_servers should be written in YAML format as described in [official docs of karma](https://github.com/prymitive/karma/blob/master/docs/CONFIGURATION.md#alertmanagers)  
 Default setting:
-```
+```yaml
 karma_alertmanager_servers:
   - name: local
     uri: http://localhost:9093
@@ -53,11 +53,21 @@ karma_alertmanager_servers:
 Assumes you have karma running on same server as alertmanager and running without any authentication.
 
 ## karma_ui
-Another setting which is written in YAML as described in [official docs](https://github.com/prymitive/karma/blob/master/docs/CONFIGURATION.md#ui-defaults)
+Another setting which is written in YAML as described in [official docs](https://github.com/prymitive/karma/blob/master/docs/CONFIGURATION.md#ui-defaults)  
+Default setting:
+```yaml
+karma_ui:
+  refresh: 30s
+  hideFiltersWhenIdle: true
+  colorTitlebar: false
+  minimalGroupWidth: 420
+  alertsPerGroup: 5
+  collapseGroups: collapsedOnMobile
+```
 
 ## karma_silences_comments_linkdetect_rules
 And another one that follows original YAML format. Write them in format of
-```
+```yaml
 karma_silences_comments_linkdetect_rules:
   - regex: "(DEVOPS-[0-9]+)"
     uriTemplate: https://jira.example.com/browse/DEVOPS/$1
@@ -66,9 +76,9 @@ karma_silences_comments_linkdetect_rules:
 ```
     
 ## karma_grid_sorting 
-Last one that follows original YAML as described in [official docs](https://github.com/prymitive/karma/blob/master/docs/CONFIGURATION.md#grid)
+Last one that follows original YAML as described in [official docs](https://github.com/prymitive/karma/blob/master/docs/CONFIGURATION.md#grid)  
 There is some default setting:
-```
+```yaml
 karma_grid_sorting:
   order: label
   reverse: false
