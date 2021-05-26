@@ -99,6 +99,10 @@ silenceForm:
 {% endif %}
 grid:
   sorting:
-    {{ karma_grid_sorting | to_nice_yaml(indent=2) | indent(2, False) }}
+    {{ karma_grid_sorting | to_nice_yaml(indent=2) | indent(4, False) }}
 ui:
   {{ karma_ui | to_nice_yaml(indent=2) | indent(2, False) }}
+{% if karma_authentication is defined and karma_authentication is iterable %}
+authentication:
+  {{ karma_authentication | to_nice_yaml(indent=2) | indent(2, False) }}
+{% endif %}
