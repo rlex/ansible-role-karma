@@ -1,4 +1,4 @@
-karma_version: "0.70"
+karma_version: 0.86
 karma_listen_address: 0.0.0.0
 karma_listen_port: 8512
 karma_listen_prefix: /
